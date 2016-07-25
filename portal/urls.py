@@ -57,7 +57,7 @@ from portal.views.teacher.teach import teacher_lesson_plans, teacher_lesson_plan
     teacher_delete_students, teacher_dismiss_students, teacher_edit_class, teacher_delete_class, \
     teacher_student_reset, teacher_edit_student, teacher_edit_account, teacher_disable_2FA, \
     teacher_print_reminder_cards, teacher_accept_student_request, teacher_reject_student_request, \
-    teacher_class_password_reset
+    teacher_class_password_reset, intro_to_coding
 from portal.views.teacher.home import teacher_home
 from portal.views.email import send_new_users_report
 
@@ -107,6 +107,7 @@ urlpatterns = patterns(
 
     url(r'^teach/home/$', teacher_home, name='teacher_home'),
     url(r'^teach/lesson_plans/$', teacher_lesson_plans, name='teacher_lesson_plans'),
+    url(r'^teach/lesson_plans/intro_to_coding/$', intro_to_coding, name='intro_to_coding'), #Trial URL for pdf view
     url(r'^teach/lesson_plans_python/$', teacher_lesson_plans_python, name='teacher_lesson_plans_python'),
     url(r'^teach/account/$', teacher_edit_account, name='teacher_edit_account'),
     url(r'^teach/account/disable_2FA/(?P<pk>[0-9]+)/$', teacher_disable_2FA,

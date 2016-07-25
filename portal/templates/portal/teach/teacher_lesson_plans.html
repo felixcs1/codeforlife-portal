@@ -54,7 +54,7 @@ $(document).ready(function(){
       <td>General Resources Key Stage 1, and Lower Key Stage 2</td>
     </tr>
     <tr>
-      <td width="40%"><a href="{{ 'general_resources/introduction_to_coding.pdf'|cloud_storage }}">Introduction to Coding Guide <img src="{% static 'portal/img/pdfsmall.png' %}" /></a></td>
+      <td width="40%"><a href={% url 'intro_to_coding'%}>Introduction to Coding Guide <img src="{% static 'portal/img/pdfsmall.png' %}" /></a></td>
     </tr>
     <tr>
       <td><a href="{{ 'general_resources/levels_guide.pdf'|cloud_storage }}">Levels Guide <img src="{% static 'portal/img/pdfsmall.png' %}" /></a></td>
