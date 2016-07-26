@@ -1,0 +1,16 @@
+{% extends 'portal/teach/base.html' %}
+{% load app_tags %}
+{% load static %}
+
+
+{% block content %}   	
+
+
+<iframe src="/static/portal/js/ViewerJS/index.html/#../{{ 'general_resources/introduction_to_coding.pdf'|cloud_storage }}" width="100%" height=100%" ></iframe>
+
+<!-- <iframe src="http://docs.google.com/gview?url={{ 'general_resources/introduction_to_coding.pdf'|cloud_storage }}&embedded=true" style="width:100%; height:900px;" frameborder="0"></iframe> -->
+
+<a href="{{ 'general_resources/introduction_to_coding.pdf'|cloud_storage }}" download="introduction_to_coding.pdf"><h1>Download</h1></a>
+
+
+{% endblock content %}   
