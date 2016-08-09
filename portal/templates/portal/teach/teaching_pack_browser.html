@@ -1,0 +1,350 @@
+{% extends 'portal/teach/base.html' %}
+
+{% load app_tags %}
+{% load static %}
+
+{% block css %}
+{{ block.super }}
+
+<style>
+    .row::after {
+    content: "";
+    clear: both;
+    display: block;
+    }
+    
+    [class*="col-"] {
+    float: left;
+    padding: 5px;
+    }
+    
+    .col-1 {width: 20%;}
+    .col-2 {width: 80%;}
+    /* #sidebar {float: left; width: 20%;}
+    #content {float: right; width: 80%;} */
+    
+    ul li {
+    margin-left: 10px;
+    cursor:pointer;
+    cursor:pointer;
+    cursor:pointer;
+    cursor:pointer;
+    }
+    
+    .collapsibleList li{
+    cursor:auto;
+    
+    }
+    
+    li.collapsibleListOpen{
+    list-style-type:none
+    cursor:pointer;
+    
+    }	
+    
+    li.collapsibleListClosed{
+    list-style-type:none
+    cursor:pointer;
+    font-weight:bold;
+    }
+</style>
+
+{% endblock css %}
+
+
+{% block scripts %}
+{{ block.super }}
+
+<script type="text/javascript" src='{% static "portal/js/CollapsibleLists.compressed.js" %}'></script>
+<script type="text/javascript" src='{% static "portal/js/pdf_descriptions.js" %}'></script>
+
+
+<script>
+    window.onload = function() {
+      CollapsibleLists.apply();
+      home();
+    }; 
+</script>
+
+<script>
+    function home() {
+	$("#display_pdf").hide();
+	$("#display_home").show();
+	$("#description").hide();
+	$("#title").text('TEACHING MATERIALS');
+    }
+
+</script>
+
+<script> 
+   function load_resource(url, name) {
+	//Hide home page content and display pdf viewer
+	$("#display_pdf").show();
+	$("#display_home").hide();
+	$("#description").show();
+	
+	//Load the pdf in the veiwer
+	$("#pdf_frame").attr("src", "http://docs.google.com/gview?url=" + url + "&embedded=true");
+	
+	//Point the download button at the correct pdf
+	$("#download_button").attr("href", url);
+	
+	//Change the name of the pdf passed to the send_event function to send a ga event (send_event still in a pull request!)
+	$("#download_button").click(function(){send_event(name, "Downloaded");});
+	
+	//Set the tite of the pdf and the corresponding description
+	$("#title").text(name);
+	$("#description").text(descriptions[name]);
+   }
+</script>
+
+<script>
+    function filter(element) {
+        var value = $(element).val();
+
+        $("#teaching_materials > li").each(function() {
+            if ($(this).text().search(value) > -1) {
+                $(this).show();
+            }
+            else {
+                $(this).hide();
+            }
+        });
+    }
+</script>
+
+{% endblock scripts %}
+
+
+{% block content %} 
+
+ 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class="row">
+    <div class="col-1">
+        <h3 onclick= 'home();'> Browse Teaching Materials </h3>
+    </div>
+    
+    <div class="col-2">
+    	<div id="information">
+            <h3 id="title">Teaching Materials Browser</h3>
+            <p id="description"></p>
+        </div>	
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-1">
+        <div id="sidebar">
+            <form>
+            <input type="text" name="search" placeholder="Search.." onkeyup='filter(this);'>
+            </form>
+            <br>
+            
+            <ul id="teaching_materials">
+                
+                <li>
+                    <h4>Key Stage 1</h4>
+                    <ul class="collapsibleList" >
+                        <li>
+                            Sessions 
+                            <ul>
+                                <li>Session 1</li>
+                                <li>Session 2</li>
+                                <li onclick='load_resource("{{ 'KS1/lesson_plans/s3.pdf'|cloud_storage }}", "KS1 - Session 3");'>Session 3</li>
+                                <li>Session 4</li>
+                                <li>Session 5</li>
+                                <li>Session 6</li>
+                                <li>Session 7</li>
+                                <li>Session 8</li>
+                                <li>Session 9</li>
+                                <li>Session 10</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Resource sheets
+                            <ul>
+                                <li>KS1-S1-1</li>
+                                <li>KS1-S1-2</li>
+                                <li>KS1-S1-3</li>
+                                <li>KS1-S1-4</li>
+                                <li>KS1-S3-1</li>
+                                <li>KS1-S4-1</li>
+                                <li>KS1-S4-2</li>
+                                <li>KS1-S4-3</li>
+                                <li>KS1-S4-4</li>
+                                <li>KS1-S5-1</li>
+                                <li>KS1-S6-1</li>
+                                <li>KS1-S6-3</li>
+                                <li>KS1-S7-1</li>
+                                <li>KS1-S7-2</li>
+                                <li>KS1-S7-3</li>
+                                <li>KS1-S8-1</li>
+                                <li>KS1-S8-2</li>
+                                <li>KS1-S9-1</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Assessments
+                            <ul>
+                                <li>Assessment Sheet (KS1)</li>
+                                <li>Self Assessment Sheet (KS1)</li>
+                                <li>Teacher Record Sheet (KS1)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Assets 
+                            <ul>
+                                <li>Assets</li>
+                                <li>Code wall cards</li>
+                            </ul>
+                        </li>
+                        <li>Activity Set</li>
+                        <li onclick='load_resource("{{ 'KS1/program_solutions/program_solutions_table.pdf'|cloud_storage }}", "Program Solutions (1-28)");'>Program Solutions (1-28)</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>Key Stage 2</h4>
+                    <ul class="collapsibleList">
+                        <li><img src="{% static 'portal/img/pdfsmall.png' %}" />
+                            Sessions 
+                            <ul>
+                                <li>Session 1</li>
+                                <li>Session 2</li>
+                                <li onclick='load_resource("{{ 'KS2/lesson_plans/s3.pdf'|cloud_storage }}", "KS2 - Session 3");'>Session 3</li>
+                                <li>Session 4</li>
+                                <li>Session 5</li>
+                                <li>Session 6</li>
+                                <li>Session 7</li>
+                                <li>Session 8</li>
+                            </ul>
+                        </li>
+                    	  <li>
+                            Resource sheets
+                            <ul>
+                                <li>LKS1-S1-1</li>
+                                <li>LKS1-S2-1</li>
+                                <li>LKS1-S2-2</li>
+                                <li>LKS1-S3-1</li>
+                                <li>LKS1-S4-1</li>
+                                <li>LKS1-S4-2</li>
+                                <li>LKS1-S4-3</li>
+                                <li>LKS1-S4-4</li>
+                                <li>LKS1-S5-1</li>
+                                <li>LKS1-S6-1</li>
+                                <li>LKS1-S7-1</li>
+                                <li>LKS1-S7-2</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Assessments
+                            <ul>
+                                <li>Assessment Sheet (KS2)</li>
+                                <li>Self Assessment Sheet (KS2)</li>
+                                <li>Teacher Record Sheet (KS2)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Assets 
+                            <ul>
+                                <li>Assets</li>
+                                <li>Code wall cards</li>
+                            </ul>
+                        </li>
+                        <li>Activity Set</li>
+                        <li onclick='load_resource("{{ 'KS2/program_solutions/program_solutions_table.pdf'|cloud_storage }}", "Program Solutions (29-50)" );'>Program Solutions (29-50)</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>Upper Key Stage 2-Python</h4>
+                    <ul class="collapsibleList">
+                         <li>
+                            Sessions 
+                            <ul>
+                                <li>Session 1</li>
+                                <li>Session 2</li>
+                                <li>Session 3</li>
+                                <li>Session 4</li>
+                                <li>Session 5</li>
+                                <li>Session 6</li>
+                                <li>Session 7</li>
+                                <li>Session 8</li>
+                            </ul>
+                        </li>                        
+                        <li>
+                            Resource sheets
+                            <ul>
+                                <li>UKS1-S1-1</li>
+                                <li>UKS1-S2-1</li>
+                                <li>UKS1-S2-2</li>
+                                <li>UKS1-S3-1</li>
+                                <li>UKS1-S3-2</li>
+                                <li>UKS1-S4-1</li>
+                                <li>UKS1-S5-1</li>
+                                <li>UKS1-S5-2</li>
+                                <li>UKS1-S5-3</li>
+                                <li>UKS1-S6-1</li>
+                                <li>UKS1-S6-2</li>
+                                <li>UKS1-S7-1</li>
+                                <li>UKS1-S7-2</li>
+                                <li>UKS1-S8-1</li>
+                                <li>UKS1-S8-2</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Assessments
+                            <ul>
+                                <li>Assessment Sheet (UKS2-A)</li>
+                                <li>Self Assessment Sheet (UKS2-SA)</li>
+                                <li>Teacher Record Sheet (UKS2-TRS)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Assets 
+                            <ul>
+                                <li>Assets</li>
+                                <li>Code wall cards</li>
+                            </ul>
+                        </li>
+                        <li>Introduction to Python</li>
+                        <li>Levels Guide (51-109)</li>
+                        <li>Blockly-Python Phrasebook</li>
+                        <li onclick='load_resource("{{ 'python/program_solutions/UKS2-PST-Program-Solutions-Table.pdf'|cloud_storage }}", "Program Solutions (50-109)");'>Program Solutions (50-109)</li>
+                    </ul>
+                </li>
+                <li onclick='load_resource("{{ 'general_resources/introduction_to_coding.pdf'|cloud_storage }}", "Introduction to Coding Guide");'>Introduction to Coding Guide</li>
+                <li onclick='load_resource("{{ 'general_resources/levels_guide.pdf'|cloud_storage }}", "Levels Guide (1-50)");'>Levels Guide (1-50)</li>
+                <li onclick='load_resource("{{ 'general_resources/glossary.pdf'|cloud_storage }}", "Glossary");'>Glossary</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-2">
+   
+        <!--<iframe src="portal/static/portal/js/ViewerJS/index.html/#/portal/static/portal/js/glossary.pdf" width="100%" height=500px" ></iframe> -->
+    	<div id="display_pdf">
+        	<div id="viewer">
+         	   <iframe id="pdf_frame" src="http://docs.google.com/gview?url={{ 'general_resources/introduction_to_coding.pdf'|cloud_storage }}&embedded=true" 				style="width:100%; height:800px;" frameborder="0"></iframe>
+       		</div>
+       	 	<div id="button">
+       			<a href="{{ 'general_resources/introduction_to_coding.pdf'|cloud_storage }}" download id="download_button" class='btn btn-primary'>Download</a> 		Button that sends a GA event when clicked
+       	 	</div>
+    	</div>
+    	
+    	<div id="display_home">
+    		<p>Welcome to the teaching materials browser! Here you can browse, preview and download all the materials available to help structure your pupils progress through rapid router. For each stage of education the materials are divied into four catagories:<b>Sessions</b>,  <b>Resource sheets</b>, <b>Assessments</b>, <b>Assets</b>. Below is a summary of what you can find in these materials. </p>
+    		
+    		<h4>Sessions</h4>
+    		<p>These are lesson plans that will help guide your class through the rapid router levels. Along with details of activities, each plan indicates the Rapid router levels that should be looked at by pupils at each lesson as well as any resource sheets or videos that can be used along side the plan.</p>
+    		<h4>Resource Sheets</h4>
+    		<p>These sheets contains series of exercises to be used along side the lesson plans. These include completing algorithms on paper as well as drawing out the path the van would take for a given algorithm.</p><img src="{% static 'portal/img/resource.png' %}" height="200" width="500"/>
+    		<h4>Assessments</h4>
+    		<p>This folder contains a sheet for pupils to self assess their knowledge of core concepts and key words aswell as a sheet for teachers to keep record of pupils' understanding.</p>
+    		<h4>Assets</h4>
+    		<p>These folders contains Code wall cards with useful programming words and phrases. This is also where to find blockly and python cut outs for building algorithms on paper.</p>
+    	</div>	
+    </div>
+</div>
+	
+{% endblock content %}

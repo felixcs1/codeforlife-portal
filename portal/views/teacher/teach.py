@@ -74,15 +74,10 @@ def teacher_lesson_plans(request):
 #Trial view to add page to view pdfs
 @login_required(login_url=reverse_lazy('teach'))
 @user_passes_test(logged_in_as_teacher, login_url=reverse_lazy('teach'))
-def intro_to_coding(request):
-    return render(request, 'portal/teach/pdfs/intro_to_coding.html')
+def teaching_pack_browser(request):
+    isHome = False
+    return render(request, 'portal/teach/teaching_pack_browser.html', {'isHome':isHome})
     
-#Trial view to add page to view pdfs
-@login_required(login_url=reverse_lazy('teach'))
-@user_passes_test(logged_in_as_teacher, login_url=reverse_lazy('teach'))
-def program_solutions_table(request):
-    return render(request, 'portal/teach/pdfs/program_solutions_table.html')    
-
 @login_required(login_url=reverse_lazy('teach'))
 @user_passes_test(logged_in_as_teacher, login_url=reverse_lazy('teach'))
 def teacher_lesson_plans_python(request):
