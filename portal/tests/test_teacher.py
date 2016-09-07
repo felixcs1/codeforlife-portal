@@ -37,6 +37,7 @@
 import re
 
 from django.core import mail
+from django.test import TestCase
 from django_selenium_clean import selenium
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -192,3 +193,7 @@ class TestTeacher(BaseTest):
             return True
         else:
             return False
+
+class TestTeacherDjango(TestCase):
+
+    def
