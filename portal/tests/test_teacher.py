@@ -37,7 +37,8 @@
 import re
 
 from django.core import mail
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.core.urlresolvers import reverse
 from django_selenium_clean import selenium
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -194,6 +195,14 @@ class TestTeacher(BaseTest):
         else:
             return False
 
+
 class TestTeacherDjango(TestCase):
 
-    def
+    def test_materials_viewer(self):
+        email, pass1 = signup_teacher_directly()
+        c = Client()
+        c.login(username=email, password=pass1)
+
+        url = reverse('materials_home')
+        response = c.get(url)
+        self.assertEqual(response.status_code, 200)
