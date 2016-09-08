@@ -89,10 +89,11 @@ function setActive() {
 function animateScroll() {
     $('a[href*=#]').click(function() {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+            history.pushState({}, "", this.href);
             var $target = getTarget(this);
             if ($target.length) {
-                var targetOffset = $target.offset().top;
-                animate(targetOffset);
+                animate($target);
+                return false;
             }
         }
     });
@@ -104,8 +105,8 @@ function getTarget(clickTarget){
     return $target;
 }
 
-function animate(targetOffset){
-    $('html,body').animate({scrollTop: targetOffset}, 500);
+function animate($target){
+      $('html,body').animate({scrollTop: $target.offset().top}, 500);
 }
 
 function downloadAnalytics() {
